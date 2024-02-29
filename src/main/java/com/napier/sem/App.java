@@ -76,9 +76,14 @@ public class App
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT emp_no, first_name, last_name "
-                            + "FROM employees "
-                            + "WHERE emp_no = " + ID;
+                    "SELECT employees.emp_no, employees.first_name, employees.last_name, employees.salary " +
+                            "FROM employees, salaries, titles WHERE employees.emp_no = salaries.emp_no " +
+                            "AND employees.emp_no = titles.emp_no " +
+                            "AND salaries.to_date ='9999-01-01'" +
+                            "AND titles.to_date ='9999-01-01'" +
+                            "AND titles.title ='Engineer'" +
+                            "ORDER BY employees.emp_no ASC";
+
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Return new employee if valid.
@@ -89,6 +94,7 @@ public class App
                 emp.emp_no = rset.getInt("emp_no");
                 emp.first_name = rset.getString("first_name");
                 emp.last_name = rset.getString("last_name");
+                emp.salary = rset.getInt("salary");
                 return emp;
             }
             else
