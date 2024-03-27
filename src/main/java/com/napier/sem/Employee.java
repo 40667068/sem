@@ -39,4 +39,5 @@ public class Employee
      * Employee's manager
      */
     public Employee manager;
+    public String dept_name;
 }
